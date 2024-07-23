@@ -7,11 +7,13 @@ import {
     IsUrl,
     ValidateNested,
     IsBoolean,
+    IsEmail,
+    IsPhoneNumber
   } from 'class-validator';
   import { Type } from 'class-transformer';
   
-  // Seller DTO
-  class SellerDto {
+  // Partner DTO
+  class PartnerDTO {
     @IsString()
     sellerId: string;
   
@@ -50,12 +52,15 @@ import {
   export class CreateProductDto {
     @IsString()
     productId: string;
+    
+    @IsString()
+    productType: string;
   
     @IsString()
-    name: string;
+    productName: string;
   
     @IsString()
-    description: string;
+    productDescription: string;
   
     @IsPositive()
     price: number;
@@ -65,39 +70,25 @@ import {
   
     @IsBoolean()
     isAvailable: boolean;
+
+    @IsBoolean()
+    isPublished: boolean;
   
     @ValidateNested()
-    @Type(() => SellerDto)
-    seller: SellerDto;
+    @Type(() => PartnerDTO)
+    partner: PartnerDTO;
   
     @IsArray()
     @ValidateNested({ each: true })
     @Type(() => ProductImageDto)
     images: ProductImageDto[];
   
-    @IsArray()
-    @ValidateNested({ each: true })
+    @ValidateNested()
     @Type(() => ProductCategoryDto)
-    categories: ProductCategoryDto[];
-  
-    @IsString()
-    @IsOptional()
-    sku?: string;
+    categories: ProductCategoryDto;
   
     @IsNumber()
     @IsOptional()
     weight?: number;
-  
-    @IsNumber()
-    @IsOptional()
-    width?: number;
-  
-    @IsNumber()
-    @IsOptional()
-    height?: number;
-  
-    @IsNumber()
-    @IsOptional()
-    depth?: number;
   }
   
