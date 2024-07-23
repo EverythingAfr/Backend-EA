@@ -15,6 +15,7 @@ import configuration from './config/configuration';
 import { MongooseModule } from '@nestjs/mongoose';
 import { APP_GUARD, RouterModule } from '@nestjs/core';
 import { AuthGuard } from './auth/auth.guard';
+import { PartnersModule } from './partners/partners.module';
 
 @Module({
   imports: [
@@ -50,7 +51,8 @@ import { AuthGuard } from './auth/auth.guard';
           }
         ]
       }
-    ])
+    ]),
+    PartnersModule
   ],
   controllers: [],
   providers: [
