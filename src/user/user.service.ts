@@ -26,13 +26,11 @@ export class UserService {
 
   async createUser({ accountStatus, password, ...createUserDto }: CreateUserDto) {
     password = await bcrypt.hash(password, 10);
-    console.log(password);
     
     if (accountStatus) {
       const newAccountStatus = new this.accountStatusModel(accountStatus);
       const savedAccountStatus = await newAccountStatus.save();
 
-      console.log(password);
       const newUser = new this.userModel({
         ...createUserDto,
         password,

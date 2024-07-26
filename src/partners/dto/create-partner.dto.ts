@@ -1,3 +1,4 @@
+import { Optional } from '@nestjs/common';
 import { Type } from 'class-transformer';
 import {
   IsBoolean,
@@ -10,11 +11,15 @@ import {
 } from 'class-validator';
 import { CreateOrderDto } from 'src/order/dto/create-order.dto';
 
-export class AccountStatusDto {
+export class PartnerAccountStatusDto {
   @IsOptional()
   @IsBoolean()
   isActive?: boolean;
 
+  @IsOptional()
+  @IsBoolean()
+  isEmailVerified?: boolean;
+  
   @IsOptional()
   @IsBoolean()
   isVerified?: boolean;
@@ -149,6 +154,31 @@ export class PartnerBusinessInfoDto {
 }
   
 export class CreatePartnerDto{
+    
+    @IsOptional()
+    @IsString()
+    fullName: string;
+    
+    @IsOptional()
+    @IsEmail()
+    email?: string;
+    
+    @IsOptional()
+    @IsString()
+    city?: string;
+    
+    @IsOptional()
+    @IsString()
+    phoneNumber?: string;
+    
+    @IsOptional()
+    @IsString()
+    password: string;
+    
+    @IsOptional()
+    @IsString()
+    stage: string;
+
     @IsOptional()
     @IsString()
     accountType: string;
@@ -166,14 +196,6 @@ export class CreatePartnerDto{
     businessAddress?: string;
 
     @IsOptional()
-    @IsEmail()
-    businessEmail?: string;
-
-    @IsOptional()
-    @IsString()
-    phoneNumber?: string;
-
-    @IsOptional()
     @IsString()
     businessLogo?: string;
 
@@ -187,8 +209,8 @@ export class CreatePartnerDto{
 
     @IsOptional()
     @ValidateNested()
-    @Type(() => AccountStatusDto)
-    accountStatus?: AccountStatusDto;
+    @Type(() => PartnerAccountStatusDto)
+    accountStatus?: PartnerAccountStatusDto;
 
     @IsOptional()
     @ValidateNested()

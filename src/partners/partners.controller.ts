@@ -2,12 +2,14 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { PartnersService } from './partners.service';
 import { CreatePartnerDto } from './dto/create-partner.dto';
 import { UpdatePartnerDto } from './dto/update-partner.dto';
+import { Public } from 'src/decorators/public.decorator';
 
-@Controller('partners')
+@Controller('/')
 export class PartnersController {
   constructor(private readonly partnersService: PartnersService) {}
 
-  @Post()
+  @Public()
+  @Post("register")
   create(@Body() createPartnerDto: CreatePartnerDto) {
     return this.partnersService.create(createPartnerDto);
   }

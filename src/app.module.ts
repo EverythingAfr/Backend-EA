@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AdminModule } from './admin/admin.module';
 import { UserModule } from './user/user.module';
 import { ProductModule } from './product/product.module';
@@ -11,20 +11,27 @@ import { CartModule } from './cart/cart.module';
 import { PaymentModule } from './payment/payment.module';
 import { ShippingModule } from './shipping/shipping.module';
 import { AuthModule } from './auth/auth.module';
-import configuration from './config/configuration';
+// import configuration from './config/configuration';
 import { MongooseModule } from '@nestjs/mongoose';
 import { APP_GUARD, RouterModule } from '@nestjs/core';
 import { AuthGuard } from './auth/auth.guard';
 import { PartnersModule } from './partners/partners.module';
+import { MailerModule } from './mailer/mailer.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       cache: true,
       isGlobal: true,
-      load: [configuration]
+      // load: [configuration]
     }), 
-    MongooseModule.forRoot('mongodb+srv://test:test1234@everythingdb.8ein3v7.mongodb.net/?retryWrites=true&w=majority&appName=EverythingDB'),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGO_URI')
+      }),
+      inject: [ConfigService]
+    }),
     AdminModule, 
     UserModule, 
     ProductModule, 
@@ -36,6 +43,8 @@ import { PartnersModule } from './partners/partners.module';
     PaymentModule, 
     ShippingModule, 
     AuthModule,
+    PartnersModule,
+    MailerModule,
     RouterModule.register([
       {
         path: 'api/test/v1/',
@@ -48,11 +57,18 @@ import { PartnersModule } from './partners/partners.module';
           {
             path: 'users',
             module: UserModule
+          },
+          {
+            path: 'mailer',
+            module: MailerModule
+          },
+          {
+            path: 'partners',
+            module: PartnersModule
           }
         ]
       }
     ]),
-    PartnersModule
   ],
   controllers: [],
   providers: [
@@ -63,3 +79,6 @@ import { PartnersModule } from './partners/partners.module';
   ],
 })
 export class AppModule {}
+
+// MongooseModule.forRoot('mongodb+srv://test:test1234@everythingdb.8ein3v7.mongodb.net/?retryWrites=true&w=majority&appName=EverythingDB'),
+

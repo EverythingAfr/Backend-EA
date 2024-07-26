@@ -26,7 +26,8 @@ export class AccountStatusDto {
   updatedAt?: Date;
 }
 
-export class CreateUserDto {
+export class CreateUserDto {y
+
   @IsNotEmpty()
   @IsString()
   username: string;
