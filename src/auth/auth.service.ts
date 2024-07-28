@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { SignIn } from './dto/signin-auth.dto';
 import { JwtService } from '@nestjs/jwt';
-import { User } from 'src/schemas/User.schema';
+import { User } from '../schemas/User.schema';
 import * as bcrypt from 'bcrypt'
 import { STATUS_CODES } from 'http';
 
