@@ -4,9 +4,12 @@ import { PartnersController } from './partners.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Partner, PartnerSchema } from './schemas/partner.schema';
 import { PartnerAccountStatus, PartnerAccountStatusSchema } from './schemas/partnerAcctStatus.schema';
+import { HttpModule } from '@nestjs/axios';
+import { PartnerOtp, PartnerOtpSchema } from './schemas/partnerOtp.schema';
 
 @Module({
   imports:[
+    HttpModule,
     MongooseModule.forFeature([
       {
         name: Partner.name,
@@ -15,6 +18,10 @@ import { PartnerAccountStatus, PartnerAccountStatusSchema } from './schemas/part
       {
         name: PartnerAccountStatus.name,
         schema: PartnerAccountStatusSchema,
+      },
+      {
+        name: PartnerOtp.name,
+        schema: PartnerOtpSchema,
       },
     ])
 ],

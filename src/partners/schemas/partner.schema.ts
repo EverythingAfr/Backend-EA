@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument, Types } from "mongoose";
-import { PartnerAccountStatus } from "./partnerAcctStatus.schema";
 
 export type UserDocument = HydratedDocument<Partner>;
 
@@ -23,8 +22,12 @@ export class Partner{
 
     @Prop({required: true})
     phoneNumber: string;
+    
+    @Prop({required: true})
+    role: string;
 
-    accountStatus: PartnerAccountStatus
+    @Prop({required: true})
+    accountStatus: string
 }
 
 export const PartnerSchema = SchemaFactory.createForClass(Partner); 

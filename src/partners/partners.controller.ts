@@ -3,6 +3,7 @@ import { PartnersService } from './partners.service';
 import { CreatePartnerDto } from './dto/create-partner.dto';
 import { UpdatePartnerDto } from './dto/update-partner.dto';
 import { Public } from 'src/decorators/public.decorator';
+import { ValidateOtpDto } from './dto/validate-otp.dto';
 
 @Controller('/')
 export class PartnersController {
@@ -12,6 +13,18 @@ export class PartnersController {
   @Post("register")
   create(@Body() createPartnerDto: CreatePartnerDto) {
     return this.partnersService.create(createPartnerDto);
+  }
+
+  @Public()
+  @Post("validateOtp")
+  validate(@Body() validateOtpDto: ValidateOtpDto) {
+    return this.partnersService.validateOtp(validateOtpDto);
+  }
+
+  @Public()
+  @Get('findByEmail/:email')
+  findByEmail(@Param('email') email: string){
+    return this.partnersService.findByEmail(email);
   }
 
   @Get()

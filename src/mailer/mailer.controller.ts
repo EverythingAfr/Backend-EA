@@ -1,6 +1,6 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller, Post,Body } from '@nestjs/common';
 import { MailerService } from './mailer.service';
-import { SendEmailDto } from './dto/sendEmail.dto';
+import { OtpDto, SendEmailDto } from './dto/sendEmail.dto';
 import { Public } from 'src/decorators/public.decorator';
 
 @Controller('otpService')
@@ -9,11 +9,12 @@ export class MailerController {
 
   @Public()
   @Post('sendOtp')
-  async sendMail() {
+  async sendMail(@Body() otpDto: OtpDto) {
+
     const dto: SendEmailDto = {
-      recipients: ["james@email.com"],
+      recipients: [otpDto.email],
       subject: "Complete your Registration",
-      html: "<p>Hello your OTP is <strong>123456</strong>, complete your registration</p>"
+      html: "<p>Hello your OTP is <strong>"+otpDto.otp+"</strong>, complete your registration</p>"
     }
     return await this.mailerService.sendEmail(dto);
   }

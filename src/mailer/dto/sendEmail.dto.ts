@@ -1,8 +1,15 @@
+import { Address } from "nodemailer";
+
 export class SendEmailDto{
-    from?: string;
+    from?: Address;
     recipients: string[];
     subject: string;
     html: string;
     text?: string;
     placeholderReplacements?: Record<string, string>;
+}
+
+export class OtpDto{
+    email: string;
+    otp: string;
 }

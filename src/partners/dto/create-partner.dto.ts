@@ -185,6 +185,10 @@ export class CreatePartnerDto{
 
     @IsOptional()
     @IsString()
+    role: string;
+
+    @IsOptional()
+    @IsString()
     productType: string;
 
     @IsOptional()
